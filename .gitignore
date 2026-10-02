@@ -2,4 +2,5 @@
 *.h5
 .vscode
 data/raw/
-data/preprocessed/
+data/processed/
+models/
