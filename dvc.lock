@@ -1,0 +1,146 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: src/prepare.py
+      hash: md5
+      md5: 31e3d539b5cd2ddca4ae214a59bd768a
+      size: 515
+    outs:
+    - path: data/raw/X_test.npy
+      hash: md5
+      md5: 4156b9580740fd6c4b4d9e769559ff1f
+      size: 7840128
+    - path: data/raw/X_train.npy
+      hash: md5
+      md5: ae10a82bc1b876b714fcf03a1b657f7c
+      size: 47040128
+    - path: data/raw/y_test.npy
+      hash: md5
+      md5: e6d24ffff98bc973b3c14df1b4a56631
+      size: 10128
+    - path: data/raw/y_train.npy
+      hash: md5
+      md5: 2d0fed45dac68b413b0442c431eb4cd0
+      size: 60128
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/raw/X_test.npy
+      hash: md5
+      md5: 4156b9580740fd6c4b4d9e769559ff1f
+      size: 7840128
+    - path: data/raw/X_train.npy
+      hash: md5
+      md5: ae10a82bc1b876b714fcf03a1b657f7c
+      size: 47040128
+    - path: data/raw/y_test.npy
+      hash: md5
+      md5: e6d24ffff98bc973b3c14df1b4a56631
+      size: 10128
+    - path: data/raw/y_train.npy
+      hash: md5
+      md5: 2d0fed45dac68b413b0442c431eb4cd0
+      size: 60128
+    - path: src/preprocess.py
+      hash: md5
+      md5: 2a5ebaaa46e451f60e2725b99df9f3dd
+      size: 1694
+    params:
+      params.yaml:
+        preprocess.seed: 42
+        preprocess.test_size: 0.2
+        preprocess.val_size: 0.1
+    outs:
+    - path: data/processed/X_test.npy
+      hash: md5
+      md5: b2ec522e81e966822712b8ecf0af1412
+      size: 31360128
+    - path: data/processed/X_train.npy
+      hash: md5
+      md5: ca0c9f9a108b1088eb91422af8269e46
+      size: 169344128
+    - path: data/processed/X_val.npy
+      hash: md5
+      md5: 082e58bb788e95662b7b902fb40ae059
+      size: 18816128
+    - path: data/processed/y_test.npy
+      hash: md5
+      md5: e6d24ffff98bc973b3c14df1b4a56631
+      size: 10128
+    - path: data/processed/y_train.npy
+      hash: md5
+      md5: 186a4af785fa00897cdc71ff1d0c8617
+      size: 54128
+    - path: data/processed/y_val.npy
+      hash: md5
+      md5: 54de13d4b1736f332245569cd4a7d851
+      size: 6128
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/X_train.npy
+      hash: md5
+      md5: ca0c9f9a108b1088eb91422af8269e46
+      size: 169344128
+    - path: data/processed/X_val.npy
+      hash: md5
+      md5: 082e58bb788e95662b7b902fb40ae059
+      size: 18816128
+    - path: data/processed/y_train.npy
+      hash: md5
+      md5: 186a4af785fa00897cdc71ff1d0c8617
+      size: 54128
+    - path: data/processed/y_val.npy
+      hash: md5
+      md5: 54de13d4b1736f332245569cd4a7d851
+      size: 6128
+    - path: src/train.py
+      hash: md5
+      md5: 7140898f7fd614c6f8510754438aca70
+      size: 2136
+    params:
+      params.yaml:
+        train.batch_size: 64
+        train.dense_units: 128
+        train.dropout_rate: 0.3
+        train.epochs: 10
+        train.learning_rate: 0.001
+    outs:
+    - path: models/history.csv
+      hash: md5
+      md5: bc56994b5f6809b45a5e488fd6d1843c
+      size: 804
+    - path: models/mnist_model.h5
+      hash: md5
+      md5: e49185eb534aabc8b5574a122c33a038
+      size: 1245272
+  evaluate:
+    cmd: python src/evalute.py
+    deps:
+    - path: data/processed/X_test.npy
+      hash: md5
+      md5: b2ec522e81e966822712b8ecf0af1412
+      size: 31360128
+    - path: data/processed/y_test.npy
+      hash: md5
+      md5: e6d24ffff98bc973b3c14df1b4a56631
+      size: 10128
+    - path: models/mnist_model.h5
+      hash: md5
+      md5: e49185eb534aabc8b5574a122c33a038
+      size: 1245272
+    - path: src/evalute.py
+      hash: md5
+      md5: f1c902fd6a642a5f73fbd145425efaa7
+      size: 1868
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 46a304e8598ab79f3b4f395490478093
+      size: 78
+    - path: models/confusion_matrix.png
+      hash: md5
+      md5: d7469fdb7f356a3dadafb0c962f55c69
+      size: 52050
