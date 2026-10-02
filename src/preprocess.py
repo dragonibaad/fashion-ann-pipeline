@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 raw_dir=os.path.join(os.path.dirname(__file__), "..", "data", "raw")
-preprocessed_dir=os.path.join(os.path.dirname(__file__), "..", "data", "preprocessed")
+preprocessed_dir=os.path.join(os.path.dirname(__file__), "..", "data", "processed")
 os.makedirs(preprocessed_dir, exist_ok=True)
 
 print(f"Now loading raw data from {raw_dir}")
@@ -21,3 +21,5 @@ np.save(os.path.join(preprocessed_dir, 'X_train.npy'), X_train)
 np.save(os.path.join(preprocessed_dir, 'y_train.npy'), y_train)
 np.save(os.path.join(preprocessed_dir, 'X_val.npy'), X_val)
 np.save(os.path.join(preprocessed_dir, 'y_val.npy'), y_val)
+np.save(os.path.join(preprocessed_dir, 'X_test.npy'), X_test)
+np.save(os.path.join(preprocessed_dir, 'y_test.npy'), y_test)
