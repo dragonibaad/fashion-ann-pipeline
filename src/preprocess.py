@@ -21,5 +21,3 @@ np.save(os.path.join(preprocessed_dir, 'X_train.npy'), X_train)
 np.save(os.path.join(preprocessed_dir, 'y_train.npy'), y_train)
 np.save(os.path.join(preprocessed_dir, 'X_val.npy'), X_val)
 np.save(os.path.join(preprocessed_dir, 'y_val.npy'), y_val)
-
-#Making some change for A5
