@@ -1,4 +1,5 @@
 .dvc/cache
 *.h5
-data/
-.vscode/
+.vscode
+data/raw/
+data/preprocessed/
