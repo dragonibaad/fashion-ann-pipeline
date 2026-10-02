@@ -1,0 +1,61 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+      - src/prepare.py
+    outs:
+      - data/raw/X_train.npy
+      - data/raw/y_train.npy
+      - data/raw/X_test.npy
+      - data/raw/y_test.npy
+
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+      - src/preprocess.py
+      - data/raw/X_train.npy
+      - data/raw/y_train.npy
+      - data/raw/X_test.npy
+      - data/raw/y_test.npy
+    params:
+      - preprocess.test_size
+      - preprocess.val_size
+      - preprocess.seed
+    outs:
+      - data/processed/X_train.npy
+      - data/processed/y_train.npy
+      - data/processed/X_val.npy
+      - data/processed/y_val.npy
+      - data/processed/X_test.npy
+      - data/processed/y_test.npy
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - data/processed/X_train.npy
+      - data/processed/y_train.npy
+      - data/processed/X_val.npy
+      - data/processed/y_val.npy
+    params:
+      - train.dense_units
+      - train.dropout_rate
+      - train.learning_rate
+      - train.epochs
+      - train.batch_size
+    outs:
+      - models/mnist_model.h5
+      - models/history.csv
+
+  evaluate:
+    cmd: python src/evalute.py
+    deps:
+      - src/evalute.py
+      - models/mnist_model.h5
+      - data/processed/X_test.npy
+      - data/processed/y_test.npy
+    metrics:
+      - metrics.json:
+          cache: false
+    outs:
+      - models/confusion_matrix.png
