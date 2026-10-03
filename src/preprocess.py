@@ -23,8 +23,8 @@ X_test = np.load(os.path.join(raw_dir, "X_test.npy"))
 y_test = np.load(os.path.join(raw_dir, "y_test.npy"))
 
 print("Now normalizing the data")
-X_train_full = X_train_full.astype("float32") / 255.0
-X_test = X_test.astype("float32") / 255.0
+X_train_full = X_train_full.astype("float64") / 255.0
+X_test = X_test.astype("float64") / 255.0
 
 print(f"Splitting data with test_size={test_size}, val_size={val_size}, seed={seed}")
 X_train, X_val, y_train, y_val = train_test_split(X_train_full, y_train_full, test_size=val_size, random_state=seed)
